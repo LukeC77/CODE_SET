@@ -1,0 +1,118 @@
+/*******************************************************************************
+* Project 6: um
+* Comp 40 Fall 2024
+* README
+* Authors: Yifan Cao (ycao12) and Diwei Chen (dchen22)
+*******************************************************************************/
+
+Acknowledgements: Got help from TAs in office hours.
+
+Correctly implemented: All
+
+Departures from our design: we change the type for id_counter. 
+It is uint64_t right now rather than uint32_t so than we are able to check 
+if id_counter reaches 2^32.
+
+ 
+Architecture:
+- Using a 8-slots array on stack to emulate 8 registers;
+- Using Hanson table as an address table to connect simulating segments to
+  actual memory on heap. Key is 32-bit segment identifier and value is a 64-bit 
+  pointer to actual memory address of a series of 32-bit word
+- Using Hanson Sequence as a queue to store previously used and freed segment
+  identifier.
+- Using a 64-bit integer to keep track of the segments we have declared
+- Using a while loop to implement control flow
+
+- main: Serves as the central control for fetching, decoding, and executing 
+        instructions. 
+        - module: - Memory Management Module: using address_table, seg_bin and 
+                    registers to emulate memory in UM.
+                  - Decode Module: using decoder to determine operation. This
+                    module is define in read.h.
+                  - Operation Module: using funtion in operation.h to execute.
+        - abstraction: 
+                  - The UM operations (`operations[]`) are abstracted as 
+                    function pointers, allowing each instruction to be 
+                    implemented as an independent function. 
+        - secret: - Knows how segments are stored, allocated, and freed.
+                  - Keeps track of available segment IDs.
+                  - Knows how each UM inst modifies registers and memory.
+- read: Serves as reader and decoder 
+        - module: - Reader Module: read um files and split them into insts
+                  - Decoder Module: decode each inst and return to caller.
+        - abstraction: 
+                  - Using bitpack to decode instructions.
+        - secret: - Knows critical info in each instruction.
+                  - Knows UM file
+- operation: implement the behavior of each UM instruction
+        - module: - Decode Module: using read func to get info
+                  - Memory Management Module: allocate and dellocate memory.
+                    maintain segid_bin for memory reuse
+        - abstraction: 
+                  - Using hasons table and sequence to implement.
+        - secret: - Knows critical info in each instruction.
+                  - Knows Memory usage.
+- type: provide types
+        - abstraction: 
+                  - Encapsulates Um instructions
+                  - Encapsulates Um register
+        - secret: - Knows types
+
+
+Time for execute 50 million instructions: 
+        - We need 636 minutes because: 
+                - The midmark has 30109 instructions.
+                - We spent 23 seconds running on it.
+                - 23 / 30,109 * 50,000,000 = 38,194 s = 636 min
+
+Each UM unit test from UMTESTS: 
+        - halt.um: 
+                - test halt. 
+                - No input and Output.
+        - lv_out.um: 
+                - test load value and output and halt. 
+                - No input. Output is '0'.
+        - in_out.um
+                - test input and output and halt.
+                - Input is 'a'. Output is 'a'.
+        - add.um
+                - test load value and add and output and halt.
+                - No input. Output is '6'.
+        - mul.um
+                - test load value and mul and output and halt.
+                - No input. Output is 'Z'.
+        - div.um
+                - test load value and div and output and halt.
+                - No input. Output is '2'.
+        - nand.um
+                - test load value and nand and output and halt.
+                - No input. Output is 'z'.
+        - cmov1.um
+                - test load value and cmov and output and halt.
+                - condition is true.
+                - No input. Output is '2'.
+        - cmov2.um
+                - test load value and cmov and output and halt.
+                - condition is false.
+                - No input. Output is '2'.
+        - map_sl_st.um
+                - test load value, Map, SegStore, SegLoad and output and halt.
+                - No input. Output is 'A'.
+        - m_um.um
+                - test load value, Map, UnMap and halt.
+                - No input and output.
+        - loadP.um
+                - test load value, nand, comv, add, load program, output and 
+                  halt.
+                - This emulates a for loop and each iteration prints a 'A'.
+                - No input. Output is "AAAAA".
+
+
+
+Hours spent on analyzing the assignment: 4 hours
+
+Hours spent on preparing design: 10 hours
+
+Hours spent on solving the problem: 20 hours
+

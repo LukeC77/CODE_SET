@@ -1,0 +1,12 @@
+halt.um
+lv_out.um
+in_out.um
+add.um
+mul.um
+div.um
+nand.um
+cmov1.um
+cmov2.um
+map_sl_st.um
+m_um.um
+loadP.um
