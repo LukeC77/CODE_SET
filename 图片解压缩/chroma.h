@@ -1,8 +1,5 @@
 /*
  *     chroma.h
- *     Yifan Cao(ycao12), Wesly Zhou (wzhou05)
- *     10/16/2024
- *     CS40 HW4 arith
  * 
  *     Purpose: Interface for chroma. Contains two functions that allow for
  *              conversion between chroma values as floats and scaled integers.

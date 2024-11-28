@@ -1,8 +1,5 @@
 /*
  *     dct.c
- *     Yifan Cao(ycao12), Wesly Zhou (wzhou05)
- *     10/16/2024
- *     CS40 HW4 arith
  * 
  *     Purpose: Implementation for dct. Defines two functions that allow
  *              for transformation between pixel space and DCT space. Utilizes

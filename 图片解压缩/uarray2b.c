@@ -1,8 +1,5 @@
 /*
  *     uarray2b.c
- *     Yifan Cao(ycao12), Wesly Zhou (wzhou05)
- *     10/03/2024
- *     CS40 HW3 locality
  * 
  *     Purpose: Implementation for uarray2b. Follows the interface for UArray2
  *              but utilizes blocking to improve locality. Defines the struct 

@@ -1,8 +1,5 @@
 /*
  *     codeword.h
- *     Yifan Cao(ycao12), Wesly Zhou (wzhou05)
- *     10/16/2024
- *     CS40 HW4 arith
  * 
  *     Purpose: Interface for codeword. Contains two functions used to pack 
  *              code words and unpack code words.

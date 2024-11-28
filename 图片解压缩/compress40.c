@@ -1,8 +1,5 @@
 /*
  *     compress40.c
- *     Yifan Cao(ycao12), Wesly Zhou (wzhou05)
- *     10/16/2024
- *     CS40 HW4 arith
  * 
  *     Purpose: Implementation for compress40. The two functions, compress40 and
  *              decompress40, are called by the main function in 40image to

@@ -1,8 +1,5 @@
 /*
  *     imageIO.h
- *     Yifan Cao(ycao12), Wesly Zhou (wzhou05)
- *     10/16/2024
- *     CS40 HW4 arith
  * 
  *     Purpose: Tnterface for imageIO. Contains all of the functions related
  *              to reading in or writing out an image from a file. The 

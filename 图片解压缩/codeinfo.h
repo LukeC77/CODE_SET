@@ -1,8 +1,5 @@
 /*
  *     codeinfo.h
- *     Yifan Cao(ycao12), Wesly Zhou (wzhou05)
- *     10/16/2024
- *     CS40 HW4 arith
  * 
  *     Purpose: Define a struct to store all of the necessary elements for
  *              packing and unpacking a code word. This struct is utilized by

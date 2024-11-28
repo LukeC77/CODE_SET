@@ -1,27 +1,15 @@
-/******************************************************************************
-* Project 4: arith
-* Comp 40 Fall 2024
-* README
-* Authors: Yifan Cao (ycao12) and Wesly Zhou (wzhou05)
-******************************************************************************/
+本程序将一个PPM格式的图片压缩以及解压缩。压缩比达到3:1以上。
 
-Architecture:
-- imageIO: Handles the first and last stages of compression and decompression.
-           Reads and writes original/decompressed images as the entry point of
-           both processes, and then can read and write compressed images as the
-           last steps.
-- compvideo: Handles the conversion between RGB values and component video.
-- chroma: Handles the conversion between chroma values as floats and encoded
-          four-bit chroma averages.
-- dct: Handles the conversion between pixel space and DCT space.
-- codeword: Packs and unpacks 32-bit code words.
 
-Acknowledgements: Got help from TAs in office hours.
+架构
+- imageIO: 处理压缩和解压缩的最初和最后阶段。
+          作为两个过程的入口点，读取和写入原始/解压缩的图像，然后可以读取和
+          写入压缩图像作为最后步骤。
 
-Correctly implemented: All
+- compvideo: 处理 RGB 值和分量视频之间的转换。
 
-Incorrectly implemented: None
+- chroma: 处理浮点色度值和编码的四位色度平均值之间的转换。
 
-Hours spent analyzing problems: 3 hours
+- dct: 处理像素空间和 DCT（离散余弦变换）空间之间的转换。
 
-Hours spent solving problems: 20 hours
+- codeword: 打包和解包32位代码字。

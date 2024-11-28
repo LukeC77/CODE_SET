@@ -1,8 +1,5 @@
 /*
  *     codeword.c
- *     Yifan Cao(ycao12), Wesly Zhou (wzhou05)
- *     10/16/2024
- *     CS40 HW4 arith
  * 
  *     Purpose: Implementation for codeword. Utilizes the bitpack interface to
  *              handle the packing and unpacking of code words. Takes

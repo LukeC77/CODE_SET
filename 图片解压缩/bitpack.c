@@ -1,8 +1,5 @@
 /*
  *     bitpack.c
- *     Yifan Cao(ycao12), Wesly Zhou (wzhou05)
- *     10/16/2024
- *     CS40 HW4 arith
  * 
  *     Purpose: Implementation for bitpack. Manipulates bit fields with a 64 
  *              bit (8 byte) value word.

@@ -1,8 +1,5 @@
 /*
  *     dct.h
- *     Yifan Cao(ycao12), Wesly Zhou (wzhou05)
- *     10/16/2024
- *     CS40 HW4 arith
  * 
  *     Purpose: Interface for dct. Contains two functions to transform between
  *              pixel space and DCT space.

@@ -1,8 +1,5 @@
 /*
  *     imageIO.c
- *     Yifan Cao(ycao12), Wesly Zhou (wzhou05)
- *     10/16/2024
- *     CS40 HW4 arith
  * 
  *     Purpose: Implementation for imageIO. Utilizes the pnm interface to handle
  *              reading and writing a PPM image. Compressed images are

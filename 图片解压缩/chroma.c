@@ -1,8 +1,5 @@
 /*
  *     chroma.c
- *     Yifan Cao(ycao12), Wesly Zhou (wzhou05)
- *     10/16/2024
- *     CS40 HW4 arith
  * 
  *     Purpose: Implementation for chroma. Goes through each pixel of a 2D array
  *              using a mapping function to get the average of the chroma

@@ -1,8 +1,5 @@
 /*
  *     compvideo.c
- *     Yifan Cao(ycao12), Wesly Zhou (wzhou05)
- *     10/16/2024
- *     CS40 HW4 arith
  * 
  *     Purpose: Implementation for compvideo. Defines two functions that allow
  *              for transformation between RGB color space and component video

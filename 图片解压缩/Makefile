@@ -1,5 +1,3 @@
-# Makefile for arith (Comp 40 Assignment 4)
-# 
 # Includes build rules for 40image
 
 ############## Variables ###############

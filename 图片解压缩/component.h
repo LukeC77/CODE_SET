@@ -1,8 +1,5 @@
 /*
  *     component.h
- *     Yifan Cao(ycao12), Wesly Zhou (wzhou05)
- *     10/16/2024
- *     CS40 HW4 arith
  * 
  *     Purpose: Define a struct to represent a pixel in component video color
  *              space. Used in two separate steps of the compression and
