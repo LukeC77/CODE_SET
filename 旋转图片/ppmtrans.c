@@ -1,8 +1,5 @@
 /*
  *     ppmtrans.c
- *     Yifan Cao(ycao12), Wesly Zhou (wzhou05)
- *     10/06/2024
- *     CS40 HW3 locality
  * 
  *     Purpose: Implementation for ppmtrans. Defines image transformations that
  *              can be performed on a given ppm image. Utilizes the pnm
