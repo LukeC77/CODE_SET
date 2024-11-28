@@ -1,0 +1,113 @@
+/**************************************************************  
+*  
+*     Program:    iii
+*     Assignment: Homework 2
+*     Authors:    Xiaoyan Xie (xxie05)
+*                 Yifan Cao (ycao12)
+*     Date:       Sept 26 2024
+*     Summary:    Two interfaces for two 2D arrays
+*
+*************************************************************/
+*                      Acknowledgement
+***************************************************************/
+In this program, operations are performed in pairs. We referred
+to StackOverflow to find the method to iterate throw sub sudoku. 
+And We also receive help from TA Bill for unblackedges
+
+/***************************************************************    
+*                      Architecture
+***************************************************************/
+We build 2 similar type 2D unboxed arrays: UArray2_T and Bit2_T.
+Architecture of them based on Hanson unboxed UArray. We declare 
+an outer array as the container to store pointers to inner arrays, 
+which stores the actual data. Index for each entry is a pair 
+representing column and row.
+
+The sudoku program checks if a 9x9 Sudoku and 3x3 sub Sudokus
+solution in a file is correct. We organize the main logic into 
+a few parts: reading the input, processing the grid, and 
+checking if the solution follows the rules.
+We read the Sudoku grid from a file using the Pnmrdr_T reader, 
+making sure the format is correct. Then, we store the data in 
+a 2D uarray, where each spot represents a cell in the puzzle.
+We use functions like validate_sequence to go through each 
+row and column to make sure the numbers 1-9 are unique. The 
+check_sub_sudoku function checks that each 3x3 subgrid also 
+has unique numbers.
+If something is wrong with the grid, we exit with EXIT_FAILURE. 
+If everything is good, we exit with EXIT_SUCCESS
+
+As for unblackedges, we use pnmrdr to read from input and store
+bits into Bit2_T array. We using BFS to search blackedges in four
+endges with a queue: (1)If we find a blackedges, convert it to white.
+(2)Then we check its neighbours. If black, mark and enqueue the neighbour. 
+(3)Then as long as queue is not empty, we continue dequeue, convert
+to white, and check dequeued bit's neighbour. Note, marked neightbour
+won't be euqueued again.
+/***************************************************************    
+*                           TEST
+***************************************************************/
+The program is tested throughly. There is no memery leak and
+the program executes smoothly. For interfaces, we test the
+functionality of each function using main function, useuarray2
+and usebit2. For Sudoku and Ublackages, details of testings 
+are listed below:
+
+General Error Handling:
+1. Argument Count Checking:
+
+- Test behavior with no arguments.
+- Test with one and two arguments.
+- Check handling of more than two arguments.
+
+2. Invalid Input Handling:
+
+- Test with an invalid input name.
+- Provide input in an incorrect format.
+- Test cases with incorrect or missing numeric values.
+- Handle empty input.
+
+For Sudoku
+
+- Test valid and invalid PGM files 
+  (non-PGM file handling).
+- Ensure the grid size is exactly 9x9.
+- Test files with negative or missing dimensions 
+  (width or height).
+- Handle graymap files with missing or non-digit characters.
+- Validate input with invalid numbers, like 0.
+- Check files with missing or incorrect headings (P2).
+- Verify that each row and column contains unique numbers 
+  from 1-9.
+- Check uniqueness within 3x3 subgrids.
+- Test grids with non-numeric or out-of-range values 
+  (e.g., numbers greater than 9, negative numbers).
+  Edge Case Testing:
+- Test grids with extra rows or columns beyond the 9x9 size.
+- Validate incomplete grids (missing cells).
+- Check grids with values outside 1-9, including non-digit 
+  characters.
+- Test for repeated numbers in rows, columns, and subgrids.
+- Handle graymap files with incorrect or missing P2 headings, 
+  invalid pixel intensities, or extra comments.
+- Check for memory leaks when processing files.
+
+For unblackedges, we test:
+
+1. read file 
+more than 2 arguments , correct arguments, 
+read from standard input, wrong file extension
+
+2. bad format input
+wrong type, invalid width and height, invalid bit character, 
+bits number is smaller than width times height
+
+3. correct format input
+files from /comp/40/bin/images/bitonal/
+all white files, all black files, 10000*10000 all black files
+diagonal is black, diagonal is white, the interior is black
+
+/*****************************************************************    
+*                      Time
+*****************************************************************/
+About 40 hours.
