@@ -2,10 +2,6 @@
  *
  *                     process.c
  *
- *     Assignment:      filesofpix
- *     Authors:         Yifan Cao
- *                      Xiaoyan Xie
- *     Date:            9/15/2024
  *
  *     Summary:
  *     This file implements various functions for processing data from a file, 

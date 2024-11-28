@@ -1,13 +1,3 @@
-
-/**********************************************************
-* Homework1: filesofpix
-* CS 40
-* README
-*  Xiaoyan Xie  xxie05
-*  Yifan Cao ycao12
-*  Sept 15 2024
-************************************************************/
-
 * PROGRAM PURPOSES
 -------------------------------
 The purpose of this program is to restore corrupted P2 PGM image 

@@ -1,6 +1,6 @@
-# 	           Makefile for CS 40 Homework 1
+
 #
-#     Author: Noah Mendelsohn (adapted from Norman Ramsey's compile script)
+#  Author: Noah Mendelsohn (adapted from Norman Ramsey's compile script)
 #
 #  Maintenance targets:
 #

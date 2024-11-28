@@ -2,10 +2,6 @@
  *
  *                     process.h
  *
- *     Assignment:      filesofpix
- *     Authors:         Yifan Cao
- *                      Xiaoyan Xie
- *     Date:            9/15/2024
  *
  *     Summary:
  *     This is the interface for implementation file process.c .

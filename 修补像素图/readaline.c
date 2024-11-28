@@ -2,10 +2,6 @@
  *
  *                     readaline.c
  *
- *     Assignment:      filesofpix
- *     Authors:         Yifan Cao
- *                      Xiaoyan Xie
- *     Date:            9/15/2024
  *
  *     Summary:
  *     This file implements the `readaline` function, which reads a line from 

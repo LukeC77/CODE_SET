@@ -2,10 +2,6 @@
  *
  *                     restoration.c
  *
- *     Assignment:      filesofpix
- *     Authors:         Yifan Cao
- *                      Xiaoyan Xie
- *     Date:            9/15/2024
  *
  *     Summary:
  *     This file is the main function for a program aimming to convert a 
