@@ -1,118 +1,69 @@
-/*******************************************************************************
-* Project 6: um
-* Comp 40 Fall 2024
-* README
-* Authors: Yifan Cao (ycao12) and Diwei Chen (dchen22)
-*******************************************************************************/
-
-Acknowledgements: Got help from TAs in office hours.
-
-Correctly implemented: All
-
-Departures from our design: we change the type for id_counter. 
-It is uint64_t right now rather than uint32_t so than we are able to check 
-if id_counter reaches 2^32.
-
- 
-Architecture:
-- Using a 8-slots array on stack to emulate 8 registers;
-- Using Hanson table as an address table to connect simulating segments to
-  actual memory on heap. Key is 32-bit segment identifier and value is a 64-bit 
-  pointer to actual memory address of a series of 32-bit word
-- Using Hanson Sequence as a queue to store previously used and freed segment
-  identifier.
-- Using a 64-bit integer to keep track of the segments we have declared
-- Using a while loop to implement control flow
-
-- main: Serves as the central control for fetching, decoding, and executing 
-        instructions. 
-        - module: - Memory Management Module: using address_table, seg_bin and 
-                    registers to emulate memory in UM.
-                  - Decode Module: using decoder to determine operation. This
-                    module is define in read.h.
-                  - Operation Module: using funtion in operation.h to execute.
-        - abstraction: 
-                  - The UM operations (`operations[]`) are abstracted as 
-                    function pointers, allowing each instruction to be 
-                    implemented as an independent function. 
-        - secret: - Knows how segments are stored, allocated, and freed.
-                  - Keeps track of available segment IDs.
-                  - Knows how each UM inst modifies registers and memory.
-- read: Serves as reader and decoder 
-        - module: - Reader Module: read um files and split them into insts
-                  - Decoder Module: decode each inst and return to caller.
-        - abstraction: 
-                  - Using bitpack to decode instructions.
-        - secret: - Knows critical info in each instruction.
-                  - Knows UM file
-- operation: implement the behavior of each UM instruction
-        - module: - Decode Module: using read func to get info
-                  - Memory Management Module: allocate and dellocate memory.
-                    maintain segid_bin for memory reuse
-        - abstraction: 
-                  - Using hasons table and sequence to implement.
-        - secret: - Knows critical info in each instruction.
-                  - Knows Memory usage.
-- type: provide types
-        - abstraction: 
-                  - Encapsulates Um instructions
-                  - Encapsulates Um register
-        - secret: - Knows types
+此程序是使用C语言来实现通用机模拟器。
 
 
-Time for execute 50 million instructions: 
-        - We need 636 minutes because: 
-                - The midmark has 30109 instructions.
-                - We spent 23 seconds running on it.
-                - 23 / 30,109 * 50,000,000 = 38,194 s = 636 min
+通用机包含以下组件
 
-Each UM unit test from UMTESTS: 
-        - halt.um: 
-                - test halt. 
-                - No input and Output.
-        - lv_out.um: 
-                - test load value and output and halt. 
-                - No input. Output is '0'.
-        - in_out.um
-                - test input and output and halt.
-                - Input is 'a'. Output is 'a'.
-        - add.um
-                - test load value and add and output and halt.
-                - No input. Output is '6'.
-        - mul.um
-                - test load value and mul and output and halt.
-                - No input. Output is 'Z'.
-        - div.um
-                - test load value and div and output and halt.
-                - No input. Output is '2'.
-        - nand.um
-                - test load value and nand and output and halt.
-                - No input. Output is 'z'.
-        - cmov1.um
-                - test load value and cmov and output and halt.
-                - condition is true.
-                - No input. Output is '2'.
-        - cmov2.um
-                - test load value and cmov and output and halt.
-                - condition is false.
-                - No input. Output is '2'.
-        - map_sl_st.um
-                - test load value, Map, SegStore, SegLoad and output and halt.
-                - No input. Output is 'A'.
-        - m_um.um
-                - test load value, Map, UnMap and halt.
-                - No input and output.
-        - loadP.um
-                - test load value, nand, comv, add, load program, output and 
-                  halt.
-                - This emulates a for loop and each iteration prints a 'A'.
-                - No input. Output is "AAAAA".
+- 八个通用寄存器，每个寄存器保存一个32位字。
+
+- 一个地址空间被划分为不断变化的内存段集合。每个段包含一系列字（word），
+  每个段都通过一个独特的32位标识符来引用。内存是分段的，以字为单位；。
+
+- 一个I/O设备，能够显示ASCII字符，并执行无符号8位字符的输入输出。
+  该设备使用stdin和stdout来实现UM的I/O指令。
+
+- 一个32位程序计数器。
+
+- 一个特殊的段通过32位标识符0来引用，并存储程序。这个段被称为0段。
 
 
+架构
+1.使用栈上的数组模拟通用机的8个寄存器
+2.使用哈希表作为地址表，将通用机的内存段和实际地址联系，模拟通用机内存管理。
+3.使用数组来模拟每个内存段
 
-Hours spent on analyzing the assignment: 4 hours
 
-Hours spent on preparing design: 10 hours
+文件
+- main.c 通用机启动器
+- operation.c, operation.h 实现通用机14个操作指令
+- read.c, read.h 实现读取um文件并解码
+- type.h 定义类型
+- 通用机测试： 包含所有测试文件
 
-Hours spent on solving the problem: 20 hours
 
+通用机14个指令与操作说明
+
+0. 条件移动       | 如果 $r[C] ≠ 0 那么 $r[A] := $r[B]
+1. 分段加载       | $r[A] := $m[$r[B]][$r[C]]
+2. 分段存储       | $m[$r[A]][$r[B]] := $r[C]
+3. 加法           | $r[A] := ($r[B] + $r[C]) mod 2^32
+4. 乘法           | $r[A] := ($r[B] * $r[C]) mod 2^32
+5. 除法           | $r[A] := [$r[B] ÷ $r[C]]
+6. 按位NAND       | $r[A] := ~($r[B] ∧ $r[C])
+7. 停止           | 计算停止。
+
+8. 映射段         | 创建一个新段，其中的字数等于 $r[C] 中的值。
+                    新段中的每个字初始化为 0。一个位模式不是全零且不与 $r[B] 中的
+                    任何当前映射段相同的位模式被放置在 $r[B] 中。
+                    新段被映射为 $m[$r[B]]。
+
+9. 解除映射段     | $m[$r[C]] 被解除映射。未来的映射段指令可能会重用标识符 $r[C]。
+
+10. 输出          | $r[C] 中的值立即被写入 I/O 设备。只允许 0 到 255 的值。
+
+11. 输入          | 通用机器等待 I/O 设备的输入。当输入到达时，$r[C] 被加载输入值，
+                    该值必须在 0 到 255 之间。如果输入结束已被标记，
+                    则 $r[C] 被加载一个全为 1 的 32 位字。
+
+12. 加载程序      | 段 $m[$r[B]] 被复制，复制的段替换 $m[0]，后者被废弃。
+                   程序计数器被设置为指向 $m[0][$r[C]]。
+                   如果 $r[B] = 0，加载程序操作预计会非常快。
+                   有关“其他指令”的语义，请参见第 3.5.2 节。
+
+13. 加载值        | 参见第 3.5.2 节中的“其他指令”语义。
+
+
+操作码格式
+- 每个指令是一个32位的二进制数。
+- 一般操作码：最高4位是操作码，最低9位是3个寄存器码，每个寄存器用3位表示，其余
+  位没有实际用途
+- 加载值操作码：最高4位是操作码， 操作码后右边3位代表寄存器码，其余位代表值。
