@@ -1,4 +1,3 @@
-# Makefile for iii (CS 40 Assignment 2)
 # 
 # Includes build rules for sudoku, unblackedges, my_useuarray2, and my_usebit2.
 #

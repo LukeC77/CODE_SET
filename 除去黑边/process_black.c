@@ -2,11 +2,6 @@
 
  *     process_black.c
  *
- *     Xiaoyan Xie (xxie05)
- *     Yifan Cao (ycao12)
- *     Sept 26 2024
- *
- *     CS 40 HW02 - iii 
  *
  *     Implementation for process_black.h     
  *

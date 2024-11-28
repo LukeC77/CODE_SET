@@ -2,11 +2,6 @@
 
  *     UArray2.h
  *
- *     Xiaoyan Xie (xxie05)
- *     Yifan Cao (ycao12)
- *     Sept 26 2024
- *
- *     CS 40 HW02 - iii
  *
  *     This header file defines the interface for a 2D unboxed array 
  *     (UArray2_T). It provides the necessary functions to create, access, 

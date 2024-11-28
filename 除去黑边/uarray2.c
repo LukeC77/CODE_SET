@@ -2,11 +2,6 @@
  *
  *      uarray2.c
  *
- *      Xiaoyan Xie (xxie05)
- *      Yifan Cao (ycao12)
- *      Sept 26 2024
- *      
- *      CS 40 HW02 - iii
  *
  *      Implements the UArray2 interface, ensuring that all functions
  *      meet the  expectations set by the client.

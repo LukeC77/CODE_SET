@@ -2,11 +2,6 @@
 
  *     unblackedges.c
  *
- *     Xiaoyan Xie (xxie05)
- *     Yifan Cao (ycao12)
- *     Sept 26 2024
- *
- *     CS 40 HW02 - iii
  *
  *     This file contains the main function and supporting functions 
  *     to process PBM (Portable Bitmap) files. The program takes one 

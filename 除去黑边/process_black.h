@@ -2,11 +2,6 @@
 
  *     process_black.h
  *
- *     Xiaoyan Xie (xxie05)
- *     Yifan Cao (ycao12)
- *     Sept 26 2024
- *
- *     CS 40 HW02 - iii
  *
  *     This header file defines the interface for reading, processing,
  *     and writing PBM  images using a 2D bit array Bit2_T). 
