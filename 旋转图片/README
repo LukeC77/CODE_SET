@@ -1,0 +1,81 @@
+/*******************************************************************************
+* Project 3: locality
+* Comp 40 Fall 2024
+* README
+* Authors: Yifan Cao (ycao12) and Wesly Zhou (wzhou05)
+*******************************************************************************/
+
+Acknowledgments: Got help from TAs in office hours
+
+Correctly implemented: All
+
+Incorrectly implemented: None
+
+Architecture: We use struct A2methods to create a superclass and create its 
+subclasses a2block and a2plain. Most functions in a2block and a2plain are 
+similar. With superclass A2methods, we can call each subclass by identifying 
+which subclass we want to use. Superclass doesn't have implementation. Thus,
+we create implementation for each subclass separately. 
+For block-major: we use an outer UArray to store pointers to blocks. Each block
+is represented by a UArray as well. 
+We utilize Pnm.h to read in and write out .pnm image.
+
+Part E:
+Computer information
+Model name: Intel(R) Xeon(R) Silver 4214Y CPU
+Model: 85
+CPU family: 6
+Clock rate: 2.20 GHz
+
+Tested using /comp/40/bin/images/from-wind-cave.jpg with pnmscale 30
+Dimensions of original image are width = 8160, height = 4580
+Times are measured in nanoseconds
+First number is the total time for the transformation
+Second number is the time per input pixel as well as an estimate of the number
+of instructions executed per input pixel
+Since there are 1 billion nanoseconds in a second and the Halligan computers
+execute approximately 1 billion instructions per second, we can estimate that
+the number of instructions is the same as the number of nanoseconds that passed
+-------------------------------------------------------------------------------
+|              |     row-major      |      col_major      |     block_major    |
+|--------------|--------------------|---------------------|--------------------|
+|              |       1436         |         1208        |        1070        |
+|  rotate 0    |--------------------|---------------------|--------------------|
+|              |     0.000038       |       0.000032      |       0.000029     |
+|--------------|--------------------|---------------------|--------------------|
+|              |     3758348687     |      3933913054     |     2211582479     |
+|  rotate 90   |--------------------|---------------------|--------------------|
+|              |     100.563744     |      105.261395     |      59.176259     |
+|--------------|--------------------|---------------------|--------------------|
+|              |     1513941457     |      5297164464     |     2041136073     |
+|  rotate 180  |--------------------|---------------------|--------------------|
+|              |     40.509179      |      141.738496     |      54.615551     |
+|--------------|--------------------|---------------------|--------------------|
+|              |     3817676992     |      4079145880     |     2102742430     |
+|  rotate 270  |--------------------|---------------------|--------------------|
+|              |     102.151217     |      109.147452     |      56.263979     |
+|--------------|--------------------|---------------------|--------------------|
+|    flip      |     1547907620     |      5437792988     |     2112238298     |
+|  horizontal  |--------------------|---------------------|--------------------|
+|              |     41.418026      |      145.501354     |      56.518064     |
+|--------------|--------------------|---------------------|--------------------|
+|    flip      |     1557250971     |      5346991674     |     2056205645     |
+|   vertical   |--------------------|---------------------|--------------------|
+|              |     41.668031      |      143.071744     |      55.018774     |
+|--------------|--------------------|---------------------|--------------------|
+|              |     3814462193     |      3957658827     |     2006122422     |
+|   transpose  |--------------------|---------------------|--------------------|
+|              |     102.065197     |      105.896771     |      53.678676     |
+|------------------------------------------------------------------------------|
+On average, block major access performs the best. Row major performs the best
+on transformations where rows map to rows (180 degree rotation, horizontal and
+vertical flips), but block major still performs closely behind. On the other
+transformations where rows of the original image map to columns of the new image
+and vice versa, row major and column major both perform poorly. Block major
+spends between 50-60 nanoseconds per input pixel regardless of the time of
+transformation.
+The number of instructions per pixel is similar regardless of image size.
+However, with smaller images, the time that block major spent increased to be
+slower than row major and column major.
+
+Hours spent: 15 hours
