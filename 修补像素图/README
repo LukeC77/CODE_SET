@@ -1,0 +1,155 @@
+
+/**********************************************************
+* Homework1: filesofpix
+* CS 40
+* README
+*  Xiaoyan Xie  xxie05
+*  Yifan Cao ycao12
+*  Sept 15 2024
+************************************************************/
+
+* PROGRAM PURPOSES
+-------------------------------
+The purpose of this program is to restore corrupted P2 PGM image 
+files and outputs the restored image in binary PGM format (P5). 
+    
+
+* ACCKNOWLEDGEMENTS  
+-------------------------------
+When implementing hash table, We referred to the Hanson interfaces
+and implementations.
+We also refered lab and class handouts.
+We got a lot of help from TAs.
+
+
+* FILES AND PURPOSES
+-------------------------------
+- restoration.c
+This file is the driver for the program. It handles command-line arguments, 
+opens the input file, and calls data_processing to process the file content.
+
+- process.h
+Declares the functions used in process.c, including file data processing, 
+extracting digits and non-digits, managing the hash table, and outputting data.
+
+- process.c
+Implements the core logic for file processing, extracting data from each line,
+storing it in a hash table, and generating output in the P5 PGM format. It 
+also manages memory allocation and cleanup.
+
+- readaline.c
+Defines readaline, which reads one line at a time from the input file, 
+dynamically allocates memory for each line, and ensures error handling for 
+file reading and memory allocation.
+
+- README
+This file contains the purpose and acknowledgements for this program,
+an explanation of files and their purposes for the program, and how to
+compile and run. In addition, data structure for the project is 
+explained here.
+
+
+* COMPILE/RUN
+-------------------------------
+- Compile using
+        make
+- Run executable with
+        ./restoration FILENAME or ./restoration
+
+* DATA STRUCTURE
+-------------------------------
+We use Hanson's Table as hashtable to data.
+
+Key is an atom that generated from non-digit string extracted from 
+corrupted lines. Same non-digit string will generate same atom.
+
+Value is a Sequence. Sequence contains pointers to digit arrays which
+is extract from corrupted lines and allocated on the heap.
+
+
+* DATA FLOW
+-------------------------------
+The data flow of our program follows a structured process where the input is 
+read line by line, processed, and then output in the desired format:
+
+Input: The program opens a file and reads its contents using readaline. Each 
+line is dynamically allocated and processed individually.
+
+Data Extraction: For each line, the extract function separates digit sequences 
+and non-digit characters, returning them to data_processing.
+
+Data Storage: The pointers to digit arrays are stored in a hash table using
+sequences, keyed by the non-digit strings.During data storage, the length 
+of sequence will be checked and the sequence whose size is larger than one 
+will be targeted and the key coresponed to this sequence will be stored.
+
+Output: Once all lines have been processed, the relevant sequence will be 
+targeted using stored key and output in P5 format by retriving the related
+arrays.
+
+Memory Management: After processing, all dynamically allocated memory is 
+freed to ensure no memory leaks.
+
+
+* Testing
+-------------------------------
+A.Overall testing strategy: 
+1. Output validation: Redirected the output from restoration and compared it 
+using diff with the expected output files, or print related information 
+out to terminal, to confirm correctness  and appropriate error
+handling for different scenarios such as argument validation, extraction
+correctness, memory management, and performance on large files. 
+
+2. Valgrind checks: Used Valgrind to test for memory leaks across all 
+functions and ensure memory is properly allocated and freed.
+
+B. Failed test
+All test files given passed our tests and can be restored correctly, except 
+Turing-corrupt. The bug hasn't found yet.
+
+C.Detailed testings
+1. Restoration function: Argument handling tests and error checking
+To ensure that different number of arguments can be handled in a right way, we
+use 0 argument 1 argument, wrong file name, more than 1 argument to test file
+reading part in main function and confirm the errors are handled correctly by
+checking the terminal output.
+2. Readaline function
+Tested reading small lines (boston-corrupt.pgm), handling EOF (test_1line.
+pgm), and incorrect file names. Simulated memory allocation failures 
+(malloc, realloc) and confirmed appropriate error handling. Verified 
+reading of long lines (bigboi.pgm). Used Valgrind for memory management 
+validation.
+3. Extract function
+Tested with small files to verify correct extraction of digits and 
+non-digit characters by comparing outputs. Checked for memory leaks 
+using Valgrind. Tested large file (bigboi.pgm) to ensure no segmentation 
+faults and correct handling of grouped digits.
+4. Route to table function
+Verified correct insertion of digit sequences into hash table by printing keys 
+and values for small test files. Ensured sequences are correctly associated 
+with non-digit keys, and tested handling of multiple entries. Compared 
+outputs to expected results and checked memory management with Valgrind.
+5. Sequence handling 
+Tested sequence insertion and confirmed that sequences maintain correct order 
+and length. Verified multiple entries for the same key are handled properly. 
+Used small test samples and Valgrind to ensure proper memory allocation and 
+cleanup.
+6. Memory free functions
+Tested memory deallocation using the vfree function to ensure that sequences 
+and hash table entries are properly freed, except Atom related memory. 
+Verified that no memory leaks using Valgrind. For each entry in the table, we 
+confirmed that dynamically allocated sequences and their contents were 
+correctly freed. Edge cases such as empty sequences and tables were also 
+tested to ensure proper handling without crashes.
+
+* Extent Of Completeness
+-------------------------------
+We cleared all corrupted files successfuly.
+
+* Time Spent
+-------------------------------
+80 hours
+
+
+
+
