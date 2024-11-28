@@ -2,11 +2,6 @@
  *
  *     main.c
  *
- *     Diwei Chen (dchen22)
- *     Yifan Cao (ycao12)
- *     Nov 20 2024
- *
- *     CS 40 HW6 - um
  *
  *     Entry point of the um program. 
  *

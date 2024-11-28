@@ -2,11 +2,6 @@
  *
  *     read.c
  *
- *     Diwei Chen (dchen22)
- *     Yifan Cao (ycao12)
- *     Nov 20 2024
- *
- *     CS 40 HW6 - um
  *
  *     The `read.c` file implements the `readUM` function, which reads a UM 
  *     instruction file and stores the instructions in a table. 

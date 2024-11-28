@@ -2,11 +2,6 @@
  *
  *     operation.c
  *
- *     Diwei Chen (dchen22)
- *     Yifan Cao (ycao12)
- *     Nov 20 2024
- *
- *     CS 40 HW6 - um
  *
  *     implementation for operation.h
  *

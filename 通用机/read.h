@@ -2,11 +2,6 @@
  *
  *     read.h
  *
- *     Diwei Chen (dchen22)
- *     Yifan Cao (ycao12)
- *     Nov 20 2024
- *
- *     CS 40 HW6 - um
  *
  *     The `read.h` file defines functions and data structures 
  *     for reading UM instructions. It declares `readUM`, which reads UM 

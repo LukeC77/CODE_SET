@@ -2,11 +2,6 @@
  *
  *     type.h
  *
- *     Diwei Chen (dchen22)
- *     Yifan Cao (ycao12)
- *     Nov 20 2024
- *
- *     CS 40 HW6 - um
  *
  *     type.h defines several types used in the context of the 
  *     Universal Machine (UM) architecture simulation.
