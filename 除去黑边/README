@@ -1,30 +1,23 @@
-/***************************************************************    
-*                      Architecture
-***************************************************************/
-We build 2 similar type 2D unboxed arrays: UArray2_T and Bit2_T.
-Architecture of them based on Hanson unboxed UArray. We declare 
-an outer array as the container to store pointers to inner arrays, 
-which stores the actual data. Index for each entry is a pair 
-representing column and row.
+架构
 
-The sudoku program checks if a 9x9 Sudoku and 3x3 sub Sudokus
-solution in a file is correct. We organize the main logic into 
-a few parts: reading the input, processing the grid, and 
-checking if the solution follows the rules.
-We read the Sudoku grid from a file using the Pnmrdr_T reader, 
-making sure the format is correct. Then, we store the data in 
-a 2D uarray, where each spot represents a cell in the puzzle.
-We use functions like validate_sequence to go through each 
-row and column to make sure the numbers 1-9 are unique. The 
-check_sub_sudoku function checks that each 3x3 subgrid also 
-has unique numbers.
-If something is wrong with the grid, we exit with EXIT_FAILURE. 
-If everything is good, we exit with EXIT_SUCCESS
+- 我们构建了无箱型（unboxed）二维数组：Bit2_T。
+- 它们的架构基于 Hanson 的无箱型 UArray。我们声明一个外部数组作为容器来存储指向
+  内部数组的指针，这些内部数组存储实际数据。每个条目的索引是一对代表列和行的数字。
 
-As for unblackedges, we use pnmrdr to read from input and store
-bits into Bit2_T array. We using BFS to search blackedges in four
-endges with a queue: (1)If we find a blackedges, convert it to white.
-(2)Then we check its neighbours. If black, mark and enqueue the neighbour. 
-(3)Then as long as queue is not empty, we continue dequeue, convert
-to white, and check dequeued bit's neighbour. Note, marked neightbour
-won't be euqueued again.
+
+Unblackedges 处理
+
+- 对于 unblackedges，我们使用 pnmrdr 从输入中读取并将位存储到 Bit2_T 数组中。
+  我们使用广度优先搜索（BFS）在四个边缘中搜索 blackedges，使用队列：
+  1. 如果我们找到 blackedges，将其转换为白色。
+  2. 然后我们检查它的邻居。如果是黑色，标记并将邻居入队。
+  3. 只要队列不为空，我们就继续出队，转换为白色，并检查出队的位的邻居。
+     注意，已标记的邻居不会再入队。
+
+
+文件：
+- unblackedges。c: 去黑边程序启动器
+- process_black: 实现去黑边功能
+- bit2: 实现无相型二维数组
+- uarray.h: 无箱型一维数组接口
+- pnmrdr.h: 阅读pnm格式的接口 

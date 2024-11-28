@@ -9,7 +9,6 @@
 # $< - the first dependency
 # $^ - all dependencies
 #
-# Last updated: February 4, 2016
 
 
 ############## Variables ###############
@@ -41,7 +40,7 @@ INCLUDES = $(shell echo *.h)
 
 ############### Rules ###############
 
-all: sudoku unblackedges my_useuarray2 my_usebit2
+all: unblackedges my_useuarray2 my_usebit2
 
 
 ## Compile step (.c files -> .o files)
@@ -53,19 +52,12 @@ all: sudoku unblackedges my_useuarray2 my_usebit2
 
 ## Linking step (.o -> executable program)
 
-sudoku: sudoku.o uarray2.o
-	$(CC) $(LDFLAGS) $^ -o $@ $(LDLIBS)
 
 unblackedges: unblackedges.o process_black.o bit2.o
 	$(CC) $(LDFLAGS) $^ -o $@ $(LDLIBS)
 
-my_useuarray2: useuarray2.o uarray2.o
-	$(CC) $(LDFLAGS) $^ -o $@ $(LDLIBS)
-
-my_usebit2: usebit2.o bit2.o
-	$(CC) $(LDFLAGS) $^ -o $@ $(LDLIBS)
 
 
 clean:
-	rm -f sudoku unblackedges my_useuarray2 my_usebit2 *.o
+	rm -f  unblackedges *.o
 
