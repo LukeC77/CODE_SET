@@ -1,0 +1,27 @@
+/******************************************************************************
+* Project 4: arith
+* Comp 40 Fall 2024
+* README
+* Authors: Yifan Cao (ycao12) and Wesly Zhou (wzhou05)
+******************************************************************************/
+
+Architecture:
+- imageIO: Handles the first and last stages of compression and decompression.
+           Reads and writes original/decompressed images as the entry point of
+           both processes, and then can read and write compressed images as the
+           last steps.
+- compvideo: Handles the conversion between RGB values and component video.
+- chroma: Handles the conversion between chroma values as floats and encoded
+          four-bit chroma averages.
+- dct: Handles the conversion between pixel space and DCT space.
+- codeword: Packs and unpacks 32-bit code words.
+
+Acknowledgements: Got help from TAs in office hours.
+
+Correctly implemented: All
+
+Incorrectly implemented: None
+
+Hours spent analyzing problems: 3 hours
+
+Hours spent solving problems: 20 hours
