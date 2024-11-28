@@ -1,144 +1,42 @@
-* PROGRAM PURPOSES
--------------------------------
-The purpose of this program is to restore corrupted P2 PGM image 
-files and outputs the restored image in binary PGM format (P5). 
-    
-
-* ACCKNOWLEDGEMENTS  
--------------------------------
-When implementing hash table, We referred to the Hanson interfaces
-and implementations.
-We also refered lab and class handouts.
-We got a lot of help from TAs.
+本程序的目的是恢复损坏的 P2 PGM 图像文件，并以二进制 PGM 格式（P5）输出恢复后的图像。
 
 
-* FILES AND PURPOSES
--------------------------------
+架构
+- 我们使用 Hanson 的 Table 作为数据的哈希表。
+- 键是由从损坏行中提取的非数字字符串生成的atom。相同的非数字字符串将生成相同的atom。
+- 值是一个序列。序列包含指向从损坏行中提取并分配在堆上的数字数组的指针。
+
+
+数据流
+- 我们的程序的数据流遵循一个结构化过程，其中输入被逐行读取、处理，然后以所需格式输出：
+- 输入：程序打开一个文件并使用 readaline 读取其内容。每一行都被动态分配并单独处理。
+- 数据提取：对于每一行，extract 函数分离数字序列和非数字字符，并将它们返回给
+  data_processing。
+- 数据存储：使用序列将数字数组的指针存储在哈希表中，以非数字字符串为键。
+  在数据存储期间，将检查序列的长度，并将大小大于一的序列作为目标，与此序列对应的键将被
+  存储。
+- 输出：一旦所有行都被处理，将使用存储的键定位相关序列，并通过检索相关数组以 P5 
+  格式输出。
+- 内存管理：处理完成后，所有动态分配的内存都将被释放，以确保没有内存泄漏。
+
+
+文件
 - restoration.c
-This file is the driver for the program. It handles command-line arguments, 
-opens the input file, and calls data_processing to process the file content.
+  此文件是程序的驱动文件。它处理命令行参数，打开输入文件，并调用 data_processing 
+  来处理文件内容。
 
 - process.h
-Declares the functions used in process.c, including file data processing, 
-extracting digits and non-digits, managing the hash table, and outputting data.
+  声明在 process.c 中使用的函数，包括文件数据处理、提取数字和非数字、管理哈希表和
+  输出数据。
 
 - process.c
-Implements the core logic for file processing, extracting data from each line,
-storing it in a hash table, and generating output in the P5 PGM format. It 
-also manages memory allocation and cleanup.
+  实现文件处理的核心逻辑，从每一行中提取数据，将其存储在哈希表中，并以 P5 PGM 格式生成
+  输出。它还管理内存分配和清理。
 
 - readaline.c
-Defines readaline, which reads one line at a time from the input file, 
-dynamically allocates memory for each line, and ensures error handling for 
-file reading and memory allocation.
+  定义 readaline，它一次从输入文件中读取一行，为每一行动态分配内存，并确保文件读取和
+  内存分配的错误处理。
 
-- README
-This file contains the purpose and acknowledgements for this program,
-an explanation of files and their purposes for the program, and how to
-compile and run. In addition, data structure for the project is 
-explained here.
-
-
-* COMPILE/RUN
--------------------------------
-- Compile using
-        make
-- Run executable with
-        ./restoration FILENAME or ./restoration
-
-* DATA STRUCTURE
--------------------------------
-We use Hanson's Table as hashtable to data.
-
-Key is an atom that generated from non-digit string extracted from 
-corrupted lines. Same non-digit string will generate same atom.
-
-Value is a Sequence. Sequence contains pointers to digit arrays which
-is extract from corrupted lines and allocated on the heap.
-
-
-* DATA FLOW
--------------------------------
-The data flow of our program follows a structured process where the input is 
-read line by line, processed, and then output in the desired format:
-
-Input: The program opens a file and reads its contents using readaline. Each 
-line is dynamically allocated and processed individually.
-
-Data Extraction: For each line, the extract function separates digit sequences 
-and non-digit characters, returning them to data_processing.
-
-Data Storage: The pointers to digit arrays are stored in a hash table using
-sequences, keyed by the non-digit strings.During data storage, the length 
-of sequence will be checked and the sequence whose size is larger than one 
-will be targeted and the key coresponed to this sequence will be stored.
-
-Output: Once all lines have been processed, the relevant sequence will be 
-targeted using stored key and output in P5 format by retriving the related
-arrays.
-
-Memory Management: After processing, all dynamically allocated memory is 
-freed to ensure no memory leaks.
-
-
-* Testing
--------------------------------
-A.Overall testing strategy: 
-1. Output validation: Redirected the output from restoration and compared it 
-using diff with the expected output files, or print related information 
-out to terminal, to confirm correctness  and appropriate error
-handling for different scenarios such as argument validation, extraction
-correctness, memory management, and performance on large files. 
-
-2. Valgrind checks: Used Valgrind to test for memory leaks across all 
-functions and ensure memory is properly allocated and freed.
-
-B. Failed test
-All test files given passed our tests and can be restored correctly, except 
-Turing-corrupt. The bug hasn't found yet.
-
-C.Detailed testings
-1. Restoration function: Argument handling tests and error checking
-To ensure that different number of arguments can be handled in a right way, we
-use 0 argument 1 argument, wrong file name, more than 1 argument to test file
-reading part in main function and confirm the errors are handled correctly by
-checking the terminal output.
-2. Readaline function
-Tested reading small lines (boston-corrupt.pgm), handling EOF (test_1line.
-pgm), and incorrect file names. Simulated memory allocation failures 
-(malloc, realloc) and confirmed appropriate error handling. Verified 
-reading of long lines (bigboi.pgm). Used Valgrind for memory management 
-validation.
-3. Extract function
-Tested with small files to verify correct extraction of digits and 
-non-digit characters by comparing outputs. Checked for memory leaks 
-using Valgrind. Tested large file (bigboi.pgm) to ensure no segmentation 
-faults and correct handling of grouped digits.
-4. Route to table function
-Verified correct insertion of digit sequences into hash table by printing keys 
-and values for small test files. Ensured sequences are correctly associated 
-with non-digit keys, and tested handling of multiple entries. Compared 
-outputs to expected results and checked memory management with Valgrind.
-5. Sequence handling 
-Tested sequence insertion and confirmed that sequences maintain correct order 
-and length. Verified multiple entries for the same key are handled properly. 
-Used small test samples and Valgrind to ensure proper memory allocation and 
-cleanup.
-6. Memory free functions
-Tested memory deallocation using the vfree function to ensure that sequences 
-and hash table entries are properly freed, except Atom related memory. 
-Verified that no memory leaks using Valgrind. For each entry in the table, we 
-confirmed that dynamically allocated sequences and their contents were 
-correctly freed. Edge cases such as empty sequences and tables were also 
-tested to ensure proper handling without crashes.
-
-* Extent Of Completeness
--------------------------------
-We cleared all corrupted files successfuly.
-
-* Time Spent
--------------------------------
-80 hours
 
 
 
